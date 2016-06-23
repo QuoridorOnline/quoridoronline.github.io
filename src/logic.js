@@ -38,6 +38,7 @@ function canAddWall(inCol, inRow, inDirection) {
 }
 
 function addWall(inCol, inRow, inDirection) {
+    console.log("Trying to add wall @ " + inCol + ", " + inRow);
     if (inDirection == Direction.HORIZONTAL)
     {
         gameState.horizontalWalls[inCol][inRow] = gameState.activePlayer;
@@ -50,6 +51,7 @@ function addWall(inCol, inRow, inDirection) {
         }
     } else // inDirection == Direction.VERTICAL
     {
+        console.log("We are here 1.");
         gameState.verticalWalls[inCol][inRow] = gameState.activePlayer;
 
         if (!isSolvable())
@@ -60,6 +62,8 @@ function addWall(inCol, inRow, inDirection) {
     }
     //console.log("Successfully added " + inDirection + " wall at: "+inRow+","+inCol);
 
+    if (gameState.activePlayer === Player.RED) gameState.redRemainingWalls--;
+    if (gameState.activePlayer === Player.BLU) gameState.bluRemainingWalls--;
     updateGame();
     return true;
 }
@@ -197,25 +201,31 @@ var wasHere = [];
 
 function isSolvable() {
     wasHere.length = COLS;
+
     for (var col = 0; col < COLS; col++)
     {
-        var temporaryArrayForHorizontal = [];
-        temporaryArrayForHorizontal.length = ROWS;
+        var temporaryArray = [];
+        temporaryArray.length = ROWS;
         for (var row = 0; row < ROWS; row++)
         {
-            temporaryArrayForHorizontal[row] = false;
+            temporaryArray[row] = false;
         }
-        wasHere[col] = temporaryArrayForHorizontal;
+        wasHere[col] = temporaryArray;
     }
 
     var bluPossible = true;
     var redPossible = recursiveSolve(gameState.redX, gameState.redY, Player.RED);
     if (redPossible)
     {
-        for (var col = 0; col < COLS; col++){
-            for (var row = 0; row < ROWS; row++){
-                wasHere[col][row] = false;
+        for (var col = 0; col < COLS; col++)
+        {
+            var temporaryArray = [];
+            temporaryArray.length = ROWS;
+            for (var row = 0; row < ROWS; row++)
+            {
+                temporaryArray[row] = false;
             }
+            wasHere[col] = temporaryArray;
         }
         bluPossible = recursiveSolve(gameState.bluX, gameState.bluY, Player.BLU);
     }
@@ -225,12 +235,12 @@ function isSolvable() {
     return redPossible && bluPossible;
 }
 
-function recursiveSolve (inX, inY) {
-    if (gameState.activePlayer == Player.EMPTY) throw Error("Player cannot be EMPTY");
+function recursiveSolve (inX, inY, inPlayer) {
+    if (inPlayer == Player.EMPTY) throw Error("Player cannot be EMPTY");
 
     // Teriminating Conditions
-    if (gameState.activePlayer == Player.RED && inY == 0) return true;
-    else if (gameState.activePlayer == Player.BLU && inY == ROWS-1) return true;
+    if (inPlayer == Player.RED && inY == 0) return true;
+    else if (inPlayer == Player.BLU && inY == ROWS-1) return true;
     wasHere[inX][inY] = true;
 
     // Check if can go up
@@ -241,26 +251,26 @@ function recursiveSolve (inX, inY) {
 
     if (canGoUp)
     {
-        //console.log("From: " +inX+", "+inY+". We can go up, going.");
-        if (recursiveSolve(inX, inY-1, gameState.activePlayer)) return true;
+        //console.log(inPlayer + ": From: " +inX+", "+inY+". We can go up, going.");
+        if (recursiveSolve(inX, inY-1, inPlayer)) return true;
     }
-    //else console.log("From: " +inX+", "+inY+". We can't go up.");
+    //else console.log(inPlayer + ": From: " +inX+", "+inY+". We can't go up.");
     if (canGoDown){
-        //console.log("From: " +inX+", "+inY+". We can go down, going.");
-        if (recursiveSolve(inX, inY+1, gameState.activePlayer)) return true;
+        //console.log(inPlayer + ": From: " +inX+", "+inY+". We can go down, going.");
+        if (recursiveSolve(inX, inY+1, inPlayer)) return true;
     }
-    //else console.log("From: " +inX+", "+inY+". We can't go down.");
+    //else console.log(inPlayer + ": From: " +inX+", "+inY+". We can't go down.");
     if (canGoLeft)
     {
-        //console.log("From: " +inX+", "+inY+". We can go left, going.");
-        if (recursiveSolve(inX-1, inY, gameState.activePlayer)) return true;
+        //console.log(inPlayer + ": From: " +inX+", "+inY+". We can go left, going.");
+        if (recursiveSolve(inX-1, inY, inPlayer)) return true;
     }
-    //else console.log("From: " +inX+", "+inY+". We can't go left.");
+    //else console.log(inPlayer + ": From: " +inX+", "+inY+". We can't go left.");
     if (canGoRight)
     {
-        //console.log("From: " +inX+", "+inY+". We can go right, going.");
-        if (recursiveSolve(inX+1, inY, gameState.activePlayer)) return true;
+        //console.log(inPlayer + ": From: " +inX+", "+inY+". We can go right, going.");
+        if (recursiveSolve(inX+1, inY, inPlayer)) return true;
     }
-    //else console.log("From: " +inX+", "+inY+". We can't go right.");
+    //else console.log(inPlayer + ": From: " +inX+", "+inY+". We can't go right.");
     return false;
 }

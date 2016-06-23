@@ -4,33 +4,33 @@
 'use strict';
 
 // Number of ROWS and COLS
-const COLS = 9; // ROWS by COLS cells
-const ROWS = 9;
+var COLS = 9; // ROWS by COLS cells
+var ROWS = 9;
 
-// Named-constants of the various dimensions used for graphics drawing
-const CELL_SIZE = 50; // cell width and height (square)
-const CANVAS_WIDTH = CELL_SIZE * COLS;  // the drawing canvas
-const CANVAS_HEIGHT = CELL_SIZE * ROWS;
+// Named-varants of the various dimensions used for graphics drawing
+var CELL_SIZE = 50; // cell width and height (square)
+var CANVAS_WIDTH = CELL_SIZE * COLS;  // the drawing canvas
+var CANVAS_HEIGHT = CELL_SIZE * ROWS;
 
 // Players (circles) are displayed inside a cell, with padding from border
-const CIRCLE_RADIUS = 15; // width/height
-const CIRCLE_LINEWIDTH = 2; // pen stroke width
+var CIRCLE_RADIUS = 15; // width/height
+var CIRCLE_LINEWIDTH = 2; // pen stroke width
 
-// Grid constants
+// Grid varants
 var GRIDLINE_WIDTH = 3;
 var GRIDLINE_COLOR = "#ddd";
 
-const WALL_STROKE_WIDTH = 4; // wall stroke width
-const WALL_PADDING = 4; // wall padding
+var WALL_STROKE_WIDTH = 4; // wall stroke width
+var WALL_PADDING = 4; // wall padding
 
 // Javascript implementation of Enums. Could possibly use http://www.2ality.com/2016/01/enumify.html
-const UDLR = { UP: 'UP', DOWN: 'DOWN', LEFT: 'LEFT', RIGHT: 'RIGHT' };
-const Direction = { VERTICAL: 'VERTICAL', HORIZONTAL: 'HORIZONTAL'};
-const Player = { RED: 'RED', BLU: 'BLUE', EMPTY: 'EMPTY'};
-const GameStatus = { PLAYING: 'PLAYING', RED_WON: 'RED_WON', BLU_WON: 'BLU_WON'};
+var UDLR = { UP: 'UP', DOWN: 'DOWN', LEFT: 'LEFT', RIGHT: 'RIGHT' };
+var Direction = { VERTICAL: 'VERTICAL', HORIZONTAL: 'HORIZONTAL'};
+var Player = { RED: 'RED', BLU: 'BLUE', EMPTY: 'EMPTY'};
+var GameStatus = { PLAYING: 'PLAYING', RED_WON: 'RED_WON', BLU_WON: 'BLU_WON'};
 
-const NOTATION_PADDING = 35;
-const TEXT_OFFSET_X = 55, TEXT_OFFSET_Y = 25;
+var NOTATION_PADDING = 35;
+var TEXT_OFFSET_X = 55, TEXT_OFFSET_Y = 25;
 
 var titleText = document.getElementById('title-text');
 titleText.width = NOTATION_PADDING + CANVAS_WIDTH;
@@ -57,7 +57,6 @@ gameText.width = NOTATION_PADDING + CANVAS_WIDTH;
 gameText.height = NOTATION_PADDING + 10;
 var gameTextContext = gameText.getContext('2d');
 gameTextContext.font = "22px Helvetica";
-gameTextContext.fillText("RED'S TURN", TEXT_OFFSET_X, TEXT_OFFSET_Y);
 function changeGameText(inString) {
     gameTextContext.clearRect(0, 0, NOTATION_PADDING + CANVAS_WIDTH, NOTATION_PADDING + 10);
     gameTextContext.fillText(inString, TEXT_OFFSET_X, TEXT_OFFSET_Y);
@@ -121,6 +120,7 @@ function initGameState() {
         currentStatus : currentStatus,
         activePlayer : activePlayer
     };
+    changeGameText(gameState.activePlayer + "'S TURN (" + gameState.redRemainingWalls + " WALLS REMAINING)");
     redrawAll();
 }
 function drawGridLines () {

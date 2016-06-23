@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Quoridor</title>
+    <!--<link rel="stylesheet" href="src/style.css">-->
+</head>
+<body>
+
+<!-- Multiple canvases: http://html5.litten.com/using-multiple-html5-canvases-as-layers/ -->
+<div class="center-wrapper-parent">
+    <canvas id="title-text"></canvas>
+    <div class="canvas-wrapper">
+        <!--<canvas id ="quoridor-grid" style = "z-index: 1; position:absolute; top:0px; top:0px">This text is displayed if your browser does not support HTML5 Canvas.</canvas>-->
+        <canvas id="left-notation"></canvas>
+        <canvas id="quoridor-board">Use a browser that supports HTML5 Canvas.</canvas>
+    </div>
+    <canvas id="bot-notation"></canvas>
+    <canvas id="game-text"></canvas>
+</div>
+
+<script type="text/javascript" src="src/logic.js"></script>
+<script type="text/javascript" src="src/main.js"></script>
+</body>
+</html>

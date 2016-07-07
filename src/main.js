@@ -13,7 +13,7 @@ var CANVAS_WIDTH = CELL_SIZE * COLS;  // the drawing canvas
 var CANVAS_HEIGHT = CELL_SIZE * ROWS;
 
 // Players (circles) are displayed inside a cell, with padding from border
-var CIRCLE_RADIUS = 75*0.3; // width/height
+var CIRCLE_RADIUS = CELL_SIZE * 0.3; // width/height
 var CIRCLE_LINEWIDTH = 2; // pen stroke width
 
 // Grid varants

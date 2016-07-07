@@ -62,9 +62,14 @@ function addWall(inCol, inRow, inDirection) {
     }
     //console.log("Successfully added " + inDirection + " wall at: "+inRow+","+inCol);
 
-    if (gameState.activePlayer === Player.RED) gameState.redRemainingWalls--;
-    if (gameState.activePlayer === Player.BLU) gameState.bluRemainingWalls--;
-    updateGame();
+    if (gameState.activePlayer === Player.RED) {
+        gameState.redRemainingWalls--;
+        drawRedRemainingWalls(gameState.redRemainingWalls);
+    }
+    if (gameState.activePlayer === Player.BLU) {
+        gameState.bluRemainingWalls--;
+        drawBluRemainingWalls(gameState.bluRemainingWalls);
+    }
     return true;
 }
 

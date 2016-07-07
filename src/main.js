@@ -34,33 +34,38 @@ var TEXT_OFFSET_X = 55, TEXT_OFFSET_Y = 25;
 
 var titleText = document.getElementById('title-text');
 titleText.width = NOTATION_PADDING + CANVAS_WIDTH;
-titleText.height = NOTATION_PADDING * 1.5;
+titleText.height = NOTATION_PADDING;
 var titleTextContext = titleText.getContext('2d');
 titleTextContext.font = "26px Futura";
 titleTextContext.fillText("QUORIDOR", 190, TEXT_OFFSET_Y);
 
+// TOP SPACE FOR BLUE WALLS
+var topNotation = document.getElementById('top-notation');
+topNotation.width = 2 * NOTATION_PADDING + CANVAS_WIDTH;
+topNotation.height = 2 * CELL_SIZE;
+var topContext = topNotation.getContext('2d');
+drawBluRemainingWalls(10);
+
+// LEFT SPACE FOR TEXT
 var leftNotation = document.getElementById('left-notation');
 leftNotation.width = NOTATION_PADDING;
 leftNotation.height = CANVAS_HEIGHT;
 var leftContext = leftNotation.getContext('2d');
 leftContext.font = "26px Arial";
 for (var i=0; i < ROWS; i++) leftContext.fillText(9-i, 10, 35+i*CELL_SIZE);
+
+// BOT SPACE FOR TEXT AND RED WALLS
 var botNotation = document.getElementById('bot-notation');
-botNotation.width = NOTATION_PADDING + CANVAS_WIDTH;
-botNotation.height = NOTATION_PADDING;
+botNotation.width = 2 * NOTATION_PADDING + CANVAS_WIDTH;
+botNotation.height = 2 * CELL_SIZE;
 var botContext = botNotation.getContext('2d');
-botContext.font = "26px Arial";
-for (var i=0; i < ROWS; i++) botContext.fillText(String.fromCharCode(65+i), 55+i*CELL_SIZE, 25);
+drawRedRemainingWalls(10);
 
 var gameText = document.getElementById('game-text');
 gameText.width = NOTATION_PADDING + CANVAS_WIDTH;
-gameText.height = NOTATION_PADDING + 10;
+gameText.height = NOTATION_PADDING;
 var gameTextContext = gameText.getContext('2d');
 gameTextContext.font = "22px Helvetica";
-function changeGameText(inString) {
-    gameTextContext.clearRect(0, 0, NOTATION_PADDING + CANVAS_WIDTH, NOTATION_PADDING + 10);
-    gameTextContext.fillText(inString, TEXT_OFFSET_X, TEXT_OFFSET_Y);
-}
 
 var canvas = document.getElementById('quoridor-board');
 canvas.width = CANVAS_WIDTH;
@@ -71,7 +76,7 @@ var context = canvas.getContext('2d');
 var gameState = [];
 initGameState();
 
-// The important functions are all below
+// ------ GAMESTATE FUNCTIONS ------ //
 function initGameState() {
     // Player positions
     var redX = 4, redY = ROWS-1;
@@ -123,6 +128,28 @@ function initGameState() {
     changeGameText(gameState.activePlayer + "'S TURN (" + gameState.redRemainingWalls + " WALLS REMAINING)");
     redrawAll();
 }
+function updateGame() {
+    // Swap active player
+    if (gameState.activePlayer === Player.RED) {
+        gameState.activePlayer = Player.BLU;
+        changeGameText(gameState.activePlayer + "'S TURN (" + gameState.bluRemainingWalls + " WALLS REMAINING)");
+    }
+    else {
+        gameState.activePlayer = Player.RED;
+        changeGameText(gameState.activePlayer + "'S TURN (" + gameState.redRemainingWalls + " WALLS REMAINING)");
+    }
+
+
+    // Check if red or blu wins
+    if (gameState.redY === 0) {changeGameText("RED WON! CLICK ANYWHERE TO RESTART."); gameState.currentStatus = GameStatus.RED_WON;}
+    else if (gameState.bluY === ROWS-1) {changeGameText("BLUE WON! CLICK ANYWHERE TO RESTART."); gameState.currentStatus = GameStatus.BLU_WON;}
+
+    // Update valid movements
+    updateValidMovements();
+    redrawAll();
+}
+
+// ------ DRAWING FUNCTIONS ------ //
 function drawGridLines () {
     var lineStart = 0;
     var lineLength = CANVAS_WIDTH;
@@ -159,55 +186,30 @@ function drawGridLines () {
 
     context.stroke();
 }
-function updateGame() {
-    // Swap active player
-    if (gameState.activePlayer === Player.RED) {
-        gameState.activePlayer = Player.BLU;
-        changeGameText(gameState.activePlayer + "'S TURN (" + gameState.bluRemainingWalls + " WALLS REMAINING)");
-    }
-    else {
-        gameState.activePlayer = Player.RED;
-        changeGameText(gameState.activePlayer + "'S TURN (" + gameState.redRemainingWalls + " WALLS REMAINING)");
-    }
-
-
-    // Check if red or blu wins
-    if (gameState.redY === 0) {changeGameText("RED WON! CLICK ANYWHERE TO RESTART."); gameState.currentStatus = GameStatus.RED_WON;}
-    else if (gameState.bluY === ROWS-1) {changeGameText("BLUE WON! CLICK ANYWHERE TO RESTART."); gameState.currentStatus = GameStatus.BLU_WON;}
-
-    // Update valid movements
-    updateValidMovements();
-    redrawAll();
-}
 function clearAll (inX, inY) {context.clearRect(0 ,0, CANVAS_WIDTH, CANVAS_HEIGHT);}
 function drawO (inX, inY, inPlayerColor) {
+    // Draws player circles
     var halfSectionSize = CELL_SIZE / 2;
     var centerX = inX * CELL_SIZE + halfSectionSize;
     var centerY = inY * CELL_SIZE + halfSectionSize;
-    //var radius = CELL_SIZE / 3;
     var radius = CIRCLE_RADIUS;
 
     context.beginPath();
     context.arc(centerX, centerY, radius, 0, 2 * Math.PI);
     if (inPlayerColor === Player.RED) context.fillStyle = "red";
     else if (inPlayerColor === Player.BLU) context.fillStyle = "blue";
-    else context.fillStyle = inPlayerColor;
+    else return;
     context.fill();
     context.lineWidth = CIRCLE_LINEWIDTH;
     context.strokeStyle = "black";
     context.stroke();
 }
 function drawWall (inX, inY, inPlayerColor, inDirection) {
-    //Hack to clamp the wall addition
-    if (inX == -1) return;
-    else if (inX == COLS-1) return;
-    if (inY == -1) return;
-    else if (inY == ROWS-1) return;
-
+    
     context.lineWidth = WALL_STROKE_WIDTH;
     if (inPlayerColor === Player.RED) context.strokeStyle = "red";
     else if (inPlayerColor === Player.BLU) context.strokeStyle = "blue";
-    else context.strokeStyle = inPlayerColor;
+    else return;
     context.lineCap = 'butt';
     context.beginPath();
 
@@ -238,137 +240,201 @@ function redrawAll () {
 
     for (var col=0; col<COLS-1; col++) {
         for (var row=0; row<ROWS-1; row++) {
-            if (gameState.horizontalWalls[col][row] == Player.RED) drawWall(col,row,Player.RED,Direction.HORIZONTAL);
-            else if (gameState.horizontalWalls[col][row] == Player.BLU) drawWall(col,row,Player.BLU,Direction.HORIZONTAL);
-            else if (gameState.verticalWalls[col][row] == Player.RED) drawWall(col,row,Player.RED,Direction.VERTICAL);
-            else if (gameState.verticalWalls[col][row] == Player.BLU) drawWall(col,row,Player.BLU,Direction.VERTICAL);
+            drawWall(col, row, gameState.horizontalWalls[col][row], Direction.HORIZONTAL);
+            drawWall(col, row, gameState.verticalWalls[col][row], Direction.VERTICAL);  
         }
     }
 }
-function clickAt (inMousePosition) {
-    if (gameState.currentStatus === GameStatus.PLAYING) {
-        // Wall placement
-        var colSelected = Math.floor(inMousePosition.x / CELL_SIZE);
-        var rowSelected = Math.floor(inMousePosition.y / CELL_SIZE);
+function changeGameText(inString) {
+    gameTextContext.clearRect(0, 0, NOTATION_PADDING + CANVAS_WIDTH, NOTATION_PADDING + 10);
+    gameTextContext.fillText(inString, TEXT_OFFSET_X, TEXT_OFFSET_Y);
+}
+function drawBluRemainingWalls(inWallsLeft) {
+    topContext.clearRect(0 ,0, 2 * NOTATION_PADDING + CANVAS_WIDTH, 2 * CELL_SIZE);
+    topContext.lineWidth = WALL_STROKE_WIDTH;
+    topContext.strokeStyle = "blue";
+    topContext.lineCap = 'butt';
 
-        var hasEnoughWalls;
-        if (gameState.activePlayer === Player.RED) hasEnoughWalls = gameState.redRemainingWalls >= 1;
-        else hasEnoughWalls = gameState.bluRemainingWalls >= 1;
+    topContext.beginPath();
+    for(var i=0; i < inWallsLeft; i++) {
+        var x = NOTATION_PADDING + 4 + i * CELL_SIZE;
+        var y1 = WALL_PADDING;
+        var y2 = 2 * CELL_SIZE - WALL_PADDING;
+        topContext.moveTo(x, y1);
+        topContext.lineTo(x, y2);
+    }
+    topContext.stroke();
+}
+function drawRedRemainingWalls(inWallsLeft) {
+    botContext.clearRect(0 ,0, 2 * NOTATION_PADDING + CANVAS_WIDTH, 2 * CELL_SIZE);
+    
+    botContext.font = "26px Arial";
+    for (var i=0; i < ROWS; i++) botContext.fillText(String.fromCharCode(65+i), 55+i*CELL_SIZE, 25);
+    
+    botContext.lineWidth = WALL_STROKE_WIDTH;
+    botContext.strokeStyle = "red";
+    botContext.lineCap = 'butt';
 
-        if (hasEnoughWalls) {
-            var remainderX = inMousePosition.x % CELL_SIZE;
-            var remainderY = inMousePosition.y % CELL_SIZE;
+    botContext.beginPath();
+    for(var i=0; i < inWallsLeft; i++) {
+        var x = NOTATION_PADDING + 4 + i * CELL_SIZE;
+        var y1 = WALL_PADDING;
+        var y2 = 2 * CELL_SIZE - WALL_PADDING;
+        botContext.moveTo(x, y1);
+        botContext.lineTo(x, y2);
+    }
+    botContext.stroke();
+}
 
-            if (remainderY <= WALL_PADDING) {
-                if (remainderX <= CELL_SIZE / 2) {
-                    if (canAddWall(colSelected - 1, rowSelected - 1, Direction.HORIZONTAL)) addWall(colSelected - 1, rowSelected - 1, Direction.HORIZONTAL);
-                    else changeGameText("WALL CLASH");
-                }
-                else if (canAddWall(colSelected, rowSelected - 1, Direction.HORIZONTAL)) addWall(colSelected, rowSelected - 1, Direction.HORIZONTAL);
-                else changeGameText("WALL CLASH");
-            }
-            else if (remainderY >= CELL_SIZE - WALL_PADDING) {
-                if (remainderX <= CELL_SIZE / 2) {
-                    if (canAddWall(colSelected - 1, rowSelected, Direction.HORIZONTAL)) addWall(colSelected - 1, rowSelected, Direction.HORIZONTAL);
-                    else changeGameText("WALL CLASH");
-                }
-                else if (canAddWall(colSelected, rowSelected, Direction.HORIZONTAL)) addWall(colSelected, rowSelected, Direction.HORIZONTAL);
-                else changeGameText("WALL CLASH");
-            }
-            // Check that you're clicking on a vertical wall
-            else if (remainderX <= WALL_PADDING) {
-                if (remainderY <= CELL_SIZE / 2) {
-                    if (canAddWall(colSelected - 1, rowSelected - 1, Direction.VERTICAL)) addWall(colSelected - 1, rowSelected - 1, Direction.VERTICAL);
-                    else changeGameText("WALL CLASH");
-                }
-                else if (canAddWall(colSelected - 1, rowSelected, Direction.VERTICAL)) addWall(colSelected - 1, rowSelected, Direction.VERTICAL);
-                else changeGameText("WALL CLASH");
-            }
-            else if (remainderX >= CELL_SIZE - WALL_PADDING) {
-                if (remainderY <= CELL_SIZE / 2) {
-                    if (canAddWall(colSelected, rowSelected - 1, Direction.VERTICAL)) addWall(colSelected, rowSelected - 1, Direction.VERTICAL);
-                    else changeGameText("WALL CLASH");
-                }
-                else if (canAddWall(colSelected, rowSelected, Direction.VERTICAL)) addWall(colSelected, rowSelected, Direction.VERTICAL);
-                else changeGameText("WALL CLASH");
-            }
+// ------ CONTROL FUNCTIONS ------ //
+
+// Returns a object with the currently selected move based on mouse pos (does not do validation)
+function selectMove (inMousePosition) {
+    // Ascertain if user wants to place a wall or move the piece
+    
+    // Get selected cell mouse cursor is in
+    var cellCol = Math.floor(inMousePosition.x / CELL_SIZE);
+    var cellRow = Math.floor(inMousePosition.y / CELL_SIZE);
+    
+    // Get selected wall mouse cursor is near
+    var wallCol = Math.round(inMousePosition.x / CELL_SIZE) - 1;
+    var wallRow = Math.round(inMousePosition.y / CELL_SIZE) - 1;
+	
+    // Determine if mouse is near a wall
+    var remainderX = inMousePosition.x % CELL_SIZE;
+    var remainderY = inMousePosition.y % CELL_SIZE;
+    
+    var payload = {
+        type: "wall",
+        dir: null,
+        col: wallCol,
+        row: wallRow
+    };
+    
+    if (remainderY <= WALL_PADDING || remainderY >= CELL_SIZE - WALL_PADDING) {
+        // Hovering near a horizontal wall; attempt to place a horizontal wall
+        payload.dir = Direction.HORIZONTAL;
+    } else if (remainderX <= WALL_PADDING || remainderX >= CELL_SIZE - WALL_PADDING) {
+        // Hovering near a vertical wall; attempt to place a vertical wall
+        payload.dir = Direction.VERTICAL;
+    } else {
+        payload.type = "piece";
+        payload.col = cellCol;
+        payload.row = cellRow;
+    }
+    
+    if (payload.type === "wall" &&
+        (payload.col < 0 || 
+        payload.col > COLS - 2 || 
+        payload.row < 0 || 
+        payload.row > ROWS - 2))
+    {
+        payload.type = null;
+    }
+    
+    return payload;
+};
+
+function validateWall (inCol, inRow, inDirection) {
+    // Wrapper around canAddWall to validate that player has enough walls
+    var hasEnoughWalls;
+    
+    if (gameState.activePlayer === Player.RED) {
+        hasEnoughWalls = (gameState.redRemainingWalls >= 1);
+    } else {
+        hasEnoughWalls = (gameState.bluRemainingWalls >= 1);
+    }
+    
+    if (!hasEnoughWalls) return false;
+    
+    return canAddWall(inCol, inRow, inDirection);
+};
+
+function validateMove (inCol, inRow) {
+    
+    var validMovements;
+    
+    if (gameState.activePlayer === Player.RED) {
+        validMovements = gameState.validMovementsRed;
+    } else {
+        // Assume activePlayer !== Player.EMPTY
+        validMovements = gameState.validMovementsBlu;
+    }
+    
+    for (var i = 0; i < validMovements.length; i++) {
+        if (inCol === validMovements[i][0] && inRow === validMovements[i][1]) {
+            return true; // Valid move found
         }
+    }
+    
+    return false; // no valid move found
+};
 
-        // Piece movement
-        var validMovements;
-        if (gameState.activePlayer === Player.RED) validMovements = gameState.validMovementsRed;
-        else validMovements = gameState.validMovementsBlu; // Assume activePlayer !== Player.EMPTY
-        for (var i = 0; i < validMovements.length; i++) {
-            if (colSelected === validMovements[i][0] && rowSelected === validMovements[i][1]) {
-                if (gameState.activePlayer === Player.RED) {gameState.redX = colSelected; gameState.redY = rowSelected;}
-                else {gameState.bluX = colSelected; gameState.bluY = rowSelected;}
+function hoverAt (inMousePosition) {
+    if (gameState.currentStatus !== GameStatus.PLAYING) {
+        return;
+    }
+    
+    clearAll();
+    redrawAll();
+    
+    var move = selectMove(inMousePosition);
+    
+    if (move.type === "wall") {
+        if (validateWall(move.col, move.row, move.dir)) {
+            drawWall(move.col, move.row, gameState.activePlayer, move.dir)
+        } else {
+            // changeGameText("No walls left or wall clash!");
+        }
+        return;
+    }
+    
+    if (move.type === "piece") {
+        if (validateMove(move.col, move.row)) {
+            drawO(move.col, move.row, gameState.activePlayer)
+        }
+    }
+};
+
+function clickAt (inMousePosition) {
+    if (gameState.currentStatus !== GameStatus.PLAYING) {
+        // TODO: RESTART GAME
+        //socket.emit("game:restartGame", "");
+		return;
+    }
+    
+    clearAll();
+    redrawAll();
+    
+    var move = selectMove(inMousePosition);
+    
+    if (move.type === "wall") {
+        if (validateWall(move.col, move.row, move.dir)) {
+            var success = addWall(move.col, move.row, move.dir);
+            if (success) {
                 updateGame();
             }
+        } else {
+            // changeGameText("No walls left or wall clash!");
         }
+        return;
     }
-    else initGameState();
-}
-function hoverAt(inMousePosition) {
-    if (gameState.currentStatus === GameStatus.PLAYING) {
-        clearAll();
-        redrawAll();
-
-        /*
-        var fadedColor;
-        if (gameState.activePlayer === Player.RED) fadedColor = "FF7F7F";
-        else fadedColor = "7F7FFF";
-        */
-
-        var colSelected = Math.floor(inMousePosition.x / CELL_SIZE);
-        var rowSelected = Math.floor(inMousePosition.y / CELL_SIZE);
-
-        var hasEnoughWalls;
-        if (gameState.activePlayer === Player.RED) hasEnoughWalls = gameState.redRemainingWalls >= 1;
-        else hasEnoughWalls = gameState.bluRemainingWalls >= 1;
-
-        if (hasEnoughWalls) {
-            var remainderX = inMousePosition.x % CELL_SIZE;
-            var remainderY = inMousePosition.y % CELL_SIZE;
-
-            if (remainderY <= WALL_PADDING) {
-                if (remainderX <= CELL_SIZE / 2) {
-                    if (canAddWall(colSelected - 1, rowSelected - 1, Direction.HORIZONTAL)) drawWall(colSelected - 1, rowSelected - 1, gameState.activePlayer, Direction.HORIZONTAL);
-                }
-                else if (canAddWall(colSelected, rowSelected - 1, Direction.HORIZONTAL)) drawWall(colSelected, rowSelected - 1, gameState.activePlayer, Direction.HORIZONTAL);
+    
+    if (move.type === "piece") {
+        if (validateMove(move.col, move.row)) {
+            if (gameState.activePlayer === Player.RED) {
+                gameState.redX = move.col;
+                gameState.redY = move.row;
+            } else {
+                gameState.bluX = move.col;
+                gameState.bluY = move.row;
             }
-            else if (remainderY >= CELL_SIZE - WALL_PADDING) {
-                if (remainderX <= CELL_SIZE / 2) {
-                    if (canAddWall(colSelected - 1, rowSelected, Direction.HORIZONTAL)) drawWall(colSelected - 1, rowSelected, gameState.activePlayer, Direction.HORIZONTAL);
-                }
-                else if (canAddWall(colSelected, rowSelected, Direction.HORIZONTAL)) drawWall(colSelected, rowSelected, gameState.activePlayer, Direction.HORIZONTAL);
-            }
-            // Check that you're clicking on a vertical wall
-            else if (remainderX <= WALL_PADDING) {
-                if (remainderY <= CELL_SIZE / 2) {
-                    if (canAddWall(colSelected - 1, rowSelected - 1, Direction.VERTICAL)) drawWall(colSelected - 1, rowSelected - 1, gameState.activePlayer, Direction.VERTICAL);
-                }
-                else if (canAddWall(colSelected - 1, rowSelected, Direction.VERTICAL)) drawWall(colSelected - 1, rowSelected, gameState.activePlayer, Direction.VERTICAL);
-            }
-            else if (remainderX >= CELL_SIZE - WALL_PADDING) {
-                if (remainderY <= CELL_SIZE / 2) {
-                    if (canAddWall(colSelected, rowSelected - 1, Direction.VERTICAL)) drawWall(colSelected, rowSelected - 1, gameState.activePlayer, Direction.VERTICAL);
-                }
-                else if (canAddWall(colSelected, rowSelected, Direction.VERTICAL)) drawWall(colSelected, rowSelected, gameState.activePlayer, Direction.VERTICAL);
-            }
+            updateGame();
         }
-
-        // Piece prediction
-        var validMovements;
-        if (gameState.activePlayer === Player.RED) validMovements = gameState.validMovementsRed;
-        else validMovements = gameState.validMovementsBlu; // Assume activePlayer !== Player.EMPTY
-        for (var i = 0; i < validMovements.length; i++) {
-            if (colSelected === validMovements[i][0] && rowSelected === validMovements[i][1]) {
-                if (gameState.activePlayer === Player.RED) drawO(colSelected, rowSelected, gameState.activePlayer);
-                else drawO(colSelected, rowSelected, gameState.activePlayer);
-            }
-        }
+        return;
     }
-}
+    
+};
 
 function getCanvasMousePosition (event) {
     var rect = canvas.getBoundingClientRect();

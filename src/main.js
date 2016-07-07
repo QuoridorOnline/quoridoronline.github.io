@@ -8,7 +8,7 @@ var COLS = 9; // ROWS by COLS cells
 var ROWS = 9;
 
 // Named-varants of the various dimensions used for graphics drawing
-var CELL_SIZE = 75; // cell width and height (square)
+var CELL_SIZE = 60; // cell width and height (square)
 var CANVAS_WIDTH = CELL_SIZE * COLS;  // the drawing canvas
 var CANVAS_HEIGHT = CELL_SIZE * ROWS;
 

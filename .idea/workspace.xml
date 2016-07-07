@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="690dc70b-4066-4b77-abae-6e927639b391" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/logic.js" afterPath="$PROJECT_DIR$/src/logic.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.js" afterPath="$PROJECT_DIR$/src/main.js" />
     </list>
     <ignored path="quoridoronline.github.io.iws" />
@@ -44,7 +41,7 @@
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
-                <marker date="1467906001863" expanded="true" signature="9851:9855" ph="{...}" />
+                <marker date="1467907195507" expanded="true" signature="9942:9946" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -251,12 +248,12 @@
       <workItem from="1467115597989" duration="773000" />
       <workItem from="1467460211605" duration="600000" />
       <workItem from="1467513995414" duration="946000" />
-      <workItem from="1467902541646" duration="2747000" />
+      <workItem from="1467902541646" duration="3358000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10019000" />
+    <option name="totallyTimeSpent" value="10630000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -311,7 +308,7 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
-            <marker date="1467906001863" expanded="true" signature="9851:9855" ph="{...}" />
+            <marker date="1467907195507" expanded="true" signature="9942:9946" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -344,7 +341,7 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
-            <marker date="1467906001863" expanded="true" signature="9851:9855" ph="{...}" />
+            <marker date="1467907195507" expanded="true" signature="9942:9946" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -377,7 +374,7 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
-            <marker date="1467906001863" expanded="true" signature="9851:9855" ph="{...}" />
+            <marker date="1467907195507" expanded="true" signature="9942:9946" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -410,7 +407,7 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
-            <marker date="1467906001863" expanded="true" signature="9851:9855" ph="{...}" />
+            <marker date="1467907195507" expanded="true" signature="9942:9946" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -443,7 +440,7 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
-            <marker date="1467906001863" expanded="true" signature="9851:9855" ph="{...}" />
+            <marker date="1467907195507" expanded="true" signature="9942:9946" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -476,7 +473,7 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
-            <marker date="1467906001863" expanded="true" signature="9851:9855" ph="{...}" />
+            <marker date="1467907195507" expanded="true" signature="9942:9946" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -514,7 +511,7 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
-            <marker date="1467906001863" expanded="true" signature="9851:9855" ph="{...}" />
+            <marker date="1467907195507" expanded="true" signature="9942:9946" ph="{...}" />
           </folding>
         </state>
       </provider>

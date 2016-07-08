@@ -187,7 +187,11 @@ function drawGridLines () {
     context.stroke();
 }
 function clearAll (inX, inY) {context.clearRect(0 ,0, CANVAS_WIDTH, CANVAS_HEIGHT);}
-function drawO (inX, inY, inPlayerColor) {
+function drawO (inX, inY, inPlayerColor, inIsHover) {
+    // If we are hovering, draw a faded player token instead
+    // default inIsHover = false
+    var inIsHover = typeof inIsHover !== 'undefined' ? inIsHover : false;
+
     // Draws player circles
     var halfSectionSize = CELL_SIZE / 2;
     var centerX = inX * CELL_SIZE + halfSectionSize;
@@ -196,20 +200,36 @@ function drawO (inX, inY, inPlayerColor) {
 
     context.beginPath();
     context.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-    if (inPlayerColor === Player.RED) context.fillStyle = "red";
-    else if (inPlayerColor === Player.BLU) context.fillStyle = "blue";
-    else return;
+    if (!inIsHover) {
+        context.strokeStyle = "black";
+        if (inPlayerColor === Player.RED) context.fillStyle = "red";
+        else if (inPlayerColor === Player.BLU) context.fillStyle = "blue";
+        else return;
+    }
+    else {
+        context.strokeStyle = "#b3b3b3";
+        if (inPlayerColor === Player.RED) context.fillStyle = "#ff9999";
+        else if (inPlayerColor === Player.BLU) context.fillStyle = "#9999ff";
+    }
     context.fill();
     context.lineWidth = CIRCLE_LINEWIDTH;
-    context.strokeStyle = "black";
     context.stroke();
 }
-function drawWall (inX, inY, inPlayerColor, inDirection) {
-    
+function drawWall (inX, inY, inPlayerColor, inDirection, inIsHover) {
+    // If we are hovering, draw a faded player token instead
+    // default inIsHover = false
+    var inIsHover = typeof inIsHover !== 'undefined' ? inIsHover : false;
+
     context.lineWidth = WALL_STROKE_WIDTH;
-    if (inPlayerColor === Player.RED) context.strokeStyle = "red";
-    else if (inPlayerColor === Player.BLU) context.strokeStyle = "blue";
-    else return;
+    if (!inIsHover) {
+        if (inPlayerColor === Player.RED) context.strokeStyle = "red";
+        else if (inPlayerColor === Player.BLU) context.strokeStyle = "blue";
+        else return;
+    }
+    else {
+        if (inPlayerColor === Player.RED) context.strokeStyle = "#ff9999";
+        else if (inPlayerColor === Player.BLU) context.strokeStyle = "#9999ff";
+    }
     context.lineCap = 'butt';
     context.beginPath();
 
@@ -335,7 +355,6 @@ function selectMove (inMousePosition) {
     
     return payload;
 };
-
 function validateWall (inCol, inRow, inDirection) {
     // Wrapper around canAddWall to validate that player has enough walls
     var hasEnoughWalls;
@@ -350,7 +369,6 @@ function validateWall (inCol, inRow, inDirection) {
     
     return canAddWall(inCol, inRow, inDirection);
 };
-
 function validateMove (inCol, inRow) {
     
     var validMovements;
@@ -371,19 +389,20 @@ function validateMove (inCol, inRow) {
     return false; // no valid move found
 };
 
+
+// ------ MOUSE FUNCTIONS ------ //
 function hoverAt (inMousePosition) {
     if (gameState.currentStatus !== GameStatus.PLAYING) {
         return;
     }
-    
-    clearAll();
+
     redrawAll();
     
     var move = selectMove(inMousePosition);
     
     if (move.type === "wall") {
         if (validateWall(move.col, move.row, move.dir)) {
-            drawWall(move.col, move.row, gameState.activePlayer, move.dir)
+            drawWall(move.col, move.row, gameState.activePlayer, move.dir, true)
         } else {
             // changeGameText("No walls left or wall clash!");
         }
@@ -392,7 +411,7 @@ function hoverAt (inMousePosition) {
     
     if (move.type === "piece") {
         if (validateMove(move.col, move.row)) {
-            drawO(move.col, move.row, gameState.activePlayer)
+            drawO(move.col, move.row, gameState.activePlayer, true)
         }
     }
 };
@@ -403,8 +422,7 @@ function clickAt (inMousePosition) {
         //socket.emit("game:restartGame", "");
 		return;
     }
-    
-    clearAll();
+
     redrawAll();
     
     var move = selectMove(inMousePosition);

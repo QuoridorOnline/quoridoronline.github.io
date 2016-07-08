@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="690dc70b-4066-4b77-abae-6e927639b391" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.js" afterPath="$PROJECT_DIR$/src/main.js" />
-    </list>
+    <list default="true" id="690dc70b-4066-4b77-abae-6e927639b391" name="Default" comment="" />
     <ignored path="quoridoronline.github.io.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,23 +21,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="19" selection-end-column="6" />
+            <state relative-caret-position="340">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="main.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="194" column="24" selection-start-line="194" selection-start-column="17" selection-end-line="194" selection-end-column="24" />
+            <state relative-caret-position="4165">
+              <caret line="405" column="16" selection-start-line="405" selection-start-column="16" selection-end-line="405" selection-end-column="16" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
+                <element signature="n#!!block;n#drawGridLines#0" expanded="false" />
+                <element signature="n#!!block;n#redrawAll#0" expanded="false" />
+                <element signature="n#!!block;n#changeGameText#0" expanded="false" />
+                <element signature="n#!!block;n#drawBluRemainingWalls#0" expanded="false" />
+                <element signature="n#!!block;n#drawRedRemainingWalls#0" expanded="false" />
+                <element signature="n#!!block;n#selectMove#0" expanded="false" />
+                <element signature="n#!!block;n#validateWall#0" expanded="false" />
+                <element signature="n#!!block;n#validateMove#0" expanded="false" />
+                <element signature="n#!!block;n#clickAt#0" expanded="false" />
                 <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
               </folding>
             </state>
@@ -49,8 +56,8 @@
       <file leaf-file-name="logic.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/logic.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="952">
-              <caret line="248" column="0" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
+            <state relative-caret-position="1071">
+              <caret line="255" column="0" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
               <folding>
                 <element signature="n#!!block;n#canAddWall#0" expanded="false" />
                 <element signature="n#!!block;n#addWall#0" expanded="false" />
@@ -70,8 +77,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/logic.js" />
-        <option value="$PROJECT_DIR$/src/main.js" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/src/main.js" />
       </list>
     </option>
   </component>
@@ -113,6 +120,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -147,7 +155,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -157,11 +164,14 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="JavaScript Debug.index.html (1)">
+  <component name="RunManager" selected="JavaScript Debug.index.html (2)">
     <configuration default="false" name="index.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:49712/quoridoronline.github.io/index.html">
       <method />
     </configuration>
     <configuration default="false" name="index.html (1)" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/quoridoronline.github.io/index.html">
+      <method />
+    </configuration>
+    <configuration default="false" name="index.html (2)" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:49646/quoridoronline.github.io/index.html">
       <method />
     </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
@@ -217,14 +227,16 @@
       <recursive>false</recursive>
       <method />
     </configuration>
-    <list size="2">
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
       <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html (1)" />
+      <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index.html (2)" />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html (1)" />
-        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html (2)" />
+        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html (1)" />
+        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
       </list>
     </recent_temporary>
   </component>
@@ -248,11 +260,12 @@
       <workItem from="1467460211605" duration="600000" />
       <workItem from="1467513995414" duration="946000" />
       <workItem from="1467902541646" duration="3535000" />
+      <workItem from="1467941794763" duration="1165000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10807000" />
+    <option name="totallyTimeSpent" value="11972000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -288,7 +301,16 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/main.js</url>
+          <line>418</line>
+          <properties />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -306,6 +328,15 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!block;n#drawGridLines#0" expanded="false" />
+            <element signature="n#!!block;n#redrawAll#0" expanded="false" />
+            <element signature="n#!!block;n#changeGameText#0" expanded="false" />
+            <element signature="n#!!block;n#drawBluRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#drawRedRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#selectMove#0" expanded="false" />
+            <element signature="n#!!block;n#validateWall#0" expanded="false" />
+            <element signature="n#!!block;n#validateMove#0" expanded="false" />
+            <element signature="n#!!block;n#clickAt#0" expanded="false" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
           </folding>
         </state>
@@ -338,6 +369,15 @@
           <caret line="58" column="40" selection-start-line="58" selection-start-column="40" selection-end-line="58" selection-end-column="40" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!block;n#drawGridLines#0" expanded="false" />
+            <element signature="n#!!block;n#redrawAll#0" expanded="false" />
+            <element signature="n#!!block;n#changeGameText#0" expanded="false" />
+            <element signature="n#!!block;n#drawBluRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#drawRedRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#selectMove#0" expanded="false" />
+            <element signature="n#!!block;n#validateWall#0" expanded="false" />
+            <element signature="n#!!block;n#validateMove#0" expanded="false" />
+            <element signature="n#!!block;n#clickAt#0" expanded="false" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
           </folding>
         </state>
@@ -370,6 +410,15 @@
           <caret line="58" column="40" selection-start-line="58" selection-start-column="40" selection-end-line="58" selection-end-column="40" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!block;n#drawGridLines#0" expanded="false" />
+            <element signature="n#!!block;n#redrawAll#0" expanded="false" />
+            <element signature="n#!!block;n#changeGameText#0" expanded="false" />
+            <element signature="n#!!block;n#drawBluRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#drawRedRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#selectMove#0" expanded="false" />
+            <element signature="n#!!block;n#validateWall#0" expanded="false" />
+            <element signature="n#!!block;n#validateMove#0" expanded="false" />
+            <element signature="n#!!block;n#clickAt#0" expanded="false" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
           </folding>
         </state>
@@ -402,6 +451,15 @@
           <caret line="58" column="40" selection-start-line="58" selection-start-column="40" selection-end-line="58" selection-end-column="40" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!block;n#drawGridLines#0" expanded="false" />
+            <element signature="n#!!block;n#redrawAll#0" expanded="false" />
+            <element signature="n#!!block;n#changeGameText#0" expanded="false" />
+            <element signature="n#!!block;n#drawBluRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#drawRedRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#selectMove#0" expanded="false" />
+            <element signature="n#!!block;n#validateWall#0" expanded="false" />
+            <element signature="n#!!block;n#validateMove#0" expanded="false" />
+            <element signature="n#!!block;n#clickAt#0" expanded="false" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
           </folding>
         </state>
@@ -434,6 +492,15 @@
           <caret line="58" column="40" selection-start-line="58" selection-start-column="40" selection-end-line="58" selection-end-column="40" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!block;n#drawGridLines#0" expanded="false" />
+            <element signature="n#!!block;n#redrawAll#0" expanded="false" />
+            <element signature="n#!!block;n#changeGameText#0" expanded="false" />
+            <element signature="n#!!block;n#drawBluRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#drawRedRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#selectMove#0" expanded="false" />
+            <element signature="n#!!block;n#validateWall#0" expanded="false" />
+            <element signature="n#!!block;n#validateMove#0" expanded="false" />
+            <element signature="n#!!block;n#clickAt#0" expanded="false" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
           </folding>
         </state>
@@ -466,6 +533,15 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!block;n#drawGridLines#0" expanded="false" />
+            <element signature="n#!!block;n#redrawAll#0" expanded="false" />
+            <element signature="n#!!block;n#changeGameText#0" expanded="false" />
+            <element signature="n#!!block;n#drawBluRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#drawRedRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#selectMove#0" expanded="false" />
+            <element signature="n#!!block;n#validateWall#0" expanded="false" />
+            <element signature="n#!!block;n#validateMove#0" expanded="false" />
+            <element signature="n#!!block;n#clickAt#0" expanded="false" />
             <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
           </folding>
         </state>
@@ -486,8 +562,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/logic.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="952">
-          <caret line="248" column="0" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
+        <state relative-caret-position="1071">
+          <caret line="255" column="0" selection-start-line="255" selection-start-column="0" selection-end-line="255" selection-end-column="0" />
           <folding>
             <element signature="n#!!block;n#canAddWall#0" expanded="false" />
             <element signature="n#!!block;n#addWall#0" expanded="false" />
@@ -497,22 +573,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.js">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="194" column="24" selection-start-line="194" selection-start-column="17" selection-end-line="194" selection-end-column="24" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="340">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/src/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="19" selection-end-column="6" />
-          <folding />
+        <state relative-caret-position="4165">
+          <caret line="405" column="16" selection-start-line="405" selection-start-column="16" selection-end-line="405" selection-end-column="16" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!block;n#drawGridLines#0" expanded="false" />
+            <element signature="n#!!block;n#redrawAll#0" expanded="false" />
+            <element signature="n#!!block;n#changeGameText#0" expanded="false" />
+            <element signature="n#!!block;n#drawBluRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#drawRedRemainingWalls#0" expanded="false" />
+            <element signature="n#!!block;n#selectMove#0" expanded="false" />
+            <element signature="n#!!block;n#validateWall#0" expanded="false" />
+            <element signature="n#!!block;n#validateMove#0" expanded="false" />
+            <element signature="n#!!block;n#clickAt#0" expanded="false" />
+            <element signature="n#!!block;n#getCanvasMousePosition#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

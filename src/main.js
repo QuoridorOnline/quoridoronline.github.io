@@ -21,7 +21,7 @@ var GRIDLINE_WIDTH = 3;
 var GRIDLINE_COLOR = "#ddd";
 
 var WALL_STROKE_WIDTH = 4; // wall stroke width
-var WALL_PADDING = 4; // wall padding
+var WALL_PADDING = CELL_SIZE / 10; // wall padding
 
 // Javascript implementation of Enums. Could possibly use http://www.2ality.com/2016/01/enumify.html
 var UDLR = { UP: 'UP', DOWN: 'DOWN', LEFT: 'LEFT', RIGHT: 'RIGHT' };
@@ -42,7 +42,7 @@ titleTextContext.fillText("QUORIDOR", NOTATION_PADDING + CANVAS_WIDTH/2 - 80, TE
 // TOP SPACE FOR BLUE WALLS
 var topNotation = document.getElementById('top-notation');
 topNotation.width = 2 * NOTATION_PADDING + CANVAS_WIDTH;
-topNotation.height = 2 * CELL_SIZE;
+topNotation.height = 2 * CELL_SIZE - 4 * WALL_PADDING;
 var topContext = topNotation.getContext('2d');
 drawBluRemainingWalls(10);
 
@@ -57,7 +57,7 @@ for (var i=0; i < ROWS; i++) leftContext.fillText(9-i, 10, (i + 0.5) * CELL_SIZE
 // BOT SPACE FOR TEXT AND RED WALLS
 var botNotation = document.getElementById('bot-notation');
 botNotation.width = 2 * NOTATION_PADDING + CANVAS_WIDTH;
-botNotation.height = 2 * CELL_SIZE;
+botNotation.height = 2 * CELL_SIZE - 4 * WALL_PADDING;
 var botContext = botNotation.getContext('2d');
 drawRedRemainingWalls(10);
 
@@ -186,7 +186,7 @@ function drawGridLines () {
 
     context.stroke();
 }
-function clearAll (inX, inY) {context.clearRect(0 ,0, CANVAS_WIDTH, CANVAS_HEIGHT);}
+function clearAll (inX, inY) {context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);}
 function drawO (inX, inY, inPlayerColor, inIsHover) {
     // If we are hovering, draw a faded player token instead
     // default inIsHover = false
@@ -230,7 +230,7 @@ function drawWall (inX, inY, inPlayerColor, inDirection, inIsHover) {
         if (inPlayerColor === Player.RED) context.strokeStyle = "#ff9999";
         else if (inPlayerColor === Player.BLU) context.strokeStyle = "#9999ff";
     }
-    context.lineCap = 'butt';
+    context.lineCap = 'round';
     context.beginPath();
 
     if (inDirection === Direction.HORIZONTAL)
@@ -253,11 +253,28 @@ function drawWall (inX, inY, inPlayerColor, inDirection, inIsHover) {
     context.stroke();
 }
 function redrawAll () {
+    // We will destroy everything on the game board
     clearAll();
+    
+    // Color the objective row the correct color
+    if (gameState.activePlayer === Player.RED) {
+        context.fillStyle = "#ff8080";
+        context.fillRect(0, 0, CANVAS_WIDTH, CELL_SIZE);
+    }
+    else {
+        context.fillStyle = "#8080ff";
+        context.fillRect(0, CANVAS_HEIGHT - CELL_SIZE, CANVAS_WIDTH, CELL_SIZE);
+    }
+    
+    
+    // Then we redraw all the grid lines
     drawGridLines();
+    
+    // Draw all the players
     drawO(gameState.redX, gameState.redY, Player.RED);
     drawO(gameState.bluX, gameState.bluY, Player.BLU);
 
+    // Draw all the game walls
     for (var col=0; col<COLS-1; col++) {
         for (var row=0; row<ROWS-1; row++) {
             drawWall(col, row, gameState.horizontalWalls[col][row], Direction.HORIZONTAL);
@@ -271,15 +288,16 @@ function changeGameText(inString) {
 }
 function drawBluRemainingWalls(inWallsLeft) {
     topContext.clearRect(0 ,0, 2 * NOTATION_PADDING + CANVAS_WIDTH, 2 * CELL_SIZE);
+    
     topContext.lineWidth = WALL_STROKE_WIDTH;
     topContext.strokeStyle = "blue";
-    topContext.lineCap = 'butt';
+    topContext.lineCap = "round";
 
     topContext.beginPath();
     for(var i=0; i < inWallsLeft; i++) {
         var x = NOTATION_PADDING + 4 + i * CELL_SIZE;
-        var y1 = WALL_PADDING;
-        var y2 = 2 * CELL_SIZE - WALL_PADDING;
+        var y1 = WALL_PADDING / 2;
+        var y2 = 2 * CELL_SIZE - 4.5 * WALL_PADDING;
         topContext.moveTo(x, y1);
         topContext.lineTo(x, y2);
     }
@@ -288,19 +306,20 @@ function drawBluRemainingWalls(inWallsLeft) {
 function drawRedRemainingWalls(inWallsLeft) {
     botContext.clearRect(0 ,0, 2 * NOTATION_PADDING + CANVAS_WIDTH, 2 * CELL_SIZE);
     
+    // Creating the bot latter notation
     botContext.font = "32px Arial";
     for (var i=0; i < ROWS; i++) 
         botContext.fillText(String.fromCharCode(65+i), NOTATION_PADDING + (i + 0.5) * CELL_SIZE - 10, 25);
     
     botContext.lineWidth = WALL_STROKE_WIDTH;
     botContext.strokeStyle = "red";
-    botContext.lineCap = 'butt';
+    botContext.lineCap = "round";
 
     botContext.beginPath();
     for(var i=0; i < inWallsLeft; i++) {
         var x = NOTATION_PADDING + 4 + i * CELL_SIZE;
-        var y1 = WALL_PADDING;
-        var y2 = 2 * CELL_SIZE - WALL_PADDING;
+        var y1 = WALL_PADDING / 2;
+        var y2 = 2 * CELL_SIZE - 4.5 * WALL_PADDING;
         botContext.moveTo(x, y1);
         botContext.lineTo(x, y2);
     }

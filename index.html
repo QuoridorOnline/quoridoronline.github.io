@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8" />
     <title>Quoridor</title>
-    <!--<link rel="stylesheet" href="src/style.css">-->
+    <link rel="stylesheet" href="src/style.css">
 </head>
 <body>
 
 <!-- Multiple canvases: http://html5.litten.com/using-multiple-html5-canvases-as-layers/ -->
-<div class="center-wrapper-parent">
+<!-- <div class="center-wrapper-parent"> -->
+<div>
     <div><canvas id="title-text"></canvas></div>
-    <div><canvas id="top-notation"></canvas></div>
-    <div class="canvas-wrapper">
+    <canvas id="top-notation"></canvas>
+    <!-- <div class="canvas-wrapper"> -->
+    <div>
         <canvas id="left-notation"></canvas>
         <canvas id="quoridor-board">Use a browser that supports HTML5 Canvas.</canvas>
+            <fieldset class="inline">
+                <button id="visit_return_button" type="submit">Button1</button>
+            </fieldset>
     </div>
-    <div><canvas id="bot-notation"></canvas></div>
+    <canvas id="bot-notation"></canvas>
     <div><canvas id="game-text"></canvas></div>
 </div>
 

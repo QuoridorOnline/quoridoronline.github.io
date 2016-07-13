@@ -72,6 +72,8 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 var context = canvas.getContext('2d');
 
+var btn_undo = document.getElementById('btn_undo');
+
 // These 2 lines start the game.
 var gameState = [];
 initGameState();
@@ -493,4 +495,8 @@ canvas.addEventListener('mousemove', function(event) {
 canvas.addEventListener('click', function (event) {
     var mousePosition = getCanvasMousePosition(event);
     clickAt(mousePosition);
+});
+
+btn_undo.addEventListener('click', function() {
+    alert('Hello world');
 });

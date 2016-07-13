@@ -42,7 +42,7 @@ titleTextContext.fillText("QUORIDOR", NOTATION_PADDING + CANVAS_WIDTH/2 - 80, TE
 // TOP SPACE FOR BLUE WALLS
 var topNotation = document.getElementById('top-notation');
 topNotation.width = 2 * NOTATION_PADDING + CANVAS_WIDTH;
-topNotation.height = 2 * CELL_SIZE - 4 * WALL_PADDING;
+topNotation.height = 2 * CELL_SIZE - 6 * WALL_PADDING;
 var topContext = topNotation.getContext('2d');
 drawBluRemainingWalls(10);
 
@@ -57,7 +57,7 @@ for (var i=0; i < ROWS; i++) leftContext.fillText(9-i, 10, (i + 0.5) * CELL_SIZE
 // BOT SPACE FOR TEXT AND RED WALLS
 var botNotation = document.getElementById('bot-notation');
 botNotation.width = 2 * NOTATION_PADDING + CANVAS_WIDTH;
-botNotation.height = 2 * CELL_SIZE - 4 * WALL_PADDING;
+botNotation.height = 2 * CELL_SIZE - 6 * WALL_PADDING;
 var botContext = botNotation.getContext('2d');
 drawRedRemainingWalls(10);
 
@@ -291,7 +291,7 @@ function changeGameText(inString) {
 function drawBluRemainingWalls(inWallsLeft) {
     topContext.clearRect(0 ,0, 2 * NOTATION_PADDING + CANVAS_WIDTH, 2 * CELL_SIZE);
     
-    topContext.lineWidth = WALL_STROKE_WIDTH;
+    topContext.lineWidth = WALL_STROKE_WIDTH * .75;
     topContext.strokeStyle = "blue";
     topContext.lineCap = "round";
 
@@ -299,7 +299,7 @@ function drawBluRemainingWalls(inWallsLeft) {
     for(var i=0; i < inWallsLeft; i++) {
         var x = NOTATION_PADDING + 4 + i * CELL_SIZE;
         var y1 = WALL_PADDING / 2;
-        var y2 = 2 * CELL_SIZE - 4.5 * WALL_PADDING;
+        var y2 = 2 * CELL_SIZE - 6.5 * WALL_PADDING;
         topContext.moveTo(x, y1);
         topContext.lineTo(x, y2);
     }
@@ -313,7 +313,7 @@ function drawRedRemainingWalls(inWallsLeft) {
     for (var i=0; i < ROWS; i++) 
         botContext.fillText(String.fromCharCode(65+i), NOTATION_PADDING + (i + 0.5) * CELL_SIZE - 10, 25);
     
-    botContext.lineWidth = WALL_STROKE_WIDTH;
+    botContext.lineWidth = WALL_STROKE_WIDTH * .75;
     botContext.strokeStyle = "red";
     botContext.lineCap = "round";
 
@@ -321,7 +321,7 @@ function drawRedRemainingWalls(inWallsLeft) {
     for(var i=0; i < inWallsLeft; i++) {
         var x = NOTATION_PADDING + 4 + i * CELL_SIZE;
         var y1 = WALL_PADDING / 2;
-        var y2 = 2 * CELL_SIZE - 4.5 * WALL_PADDING;
+        var y2 = 2 * CELL_SIZE - 6.5 * WALL_PADDING;
         botContext.moveTo(x, y1);
         botContext.lineTo(x, y2);
     }

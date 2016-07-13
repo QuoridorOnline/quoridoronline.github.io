@@ -29,7 +29,7 @@ var Direction = { VERTICAL: 'VERTICAL', HORIZONTAL: 'HORIZONTAL'};
 var Player = { RED: 'RED', BLU: 'BLUE', EMPTY: 'EMPTY'};
 var GameStatus = { PLAYING: 'PLAYING', RED_WON: 'RED_WON', BLU_WON: 'BLU_WON'};
 
-var NOTATION_PADDING = 35;
+var NOTATION_PADDING = 30;
 var TEXT_OFFSET_X = 55, TEXT_OFFSET_Y = 25;
 
 var titleText = document.getElementById('title-text');

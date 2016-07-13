@@ -7,9 +7,9 @@ fieldset.btn_holder {
 }
 
 input#btn_undo {
-    position: absolute;
-    bottom: -6px;
-    left: 610px;
+    position: relative;
+    bottom: 28px;
+    left: 9px;
 
     background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
     background:-moz-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
@@ -43,7 +43,7 @@ input#btn_undo:hover {
     background-color:#f6f6f6;
 }
 input#btn_undo:active {
-    position:absolute;
-    bottom:-7px;
-    left: 610px;
+    position:relative;
+    bottom: 26px;
+    left: 9px;
 }

@@ -38,7 +38,6 @@ function canAddWall(inCol, inRow, inDirection) {
 }
 
 function addWall(inCol, inRow, inDirection) {
-    console.log("Trying to add wall @ " + inCol + ", " + inRow);
     if (inDirection == Direction.HORIZONTAL)
     {
         gameState.horizontalWalls[inCol][inRow] = gameState.activePlayer;
@@ -51,7 +50,6 @@ function addWall(inCol, inRow, inDirection) {
         }
     } else // inDirection == Direction.VERTICAL
     {
-        console.log("We are here 1.");
         gameState.verticalWalls[inCol][inRow] = gameState.activePlayer;
 
         if (!isSolvable())
@@ -60,18 +58,43 @@ function addWall(inCol, inRow, inDirection) {
             return false;
         }
     }
-    //console.log("Successfully added " + inDirection + " wall at: "+inRow+","+inCol);
 
-    if (gameState.activePlayer === Player.RED) {
-        gameState.redRemainingWalls--;
-        drawRedRemainingWalls(gameState.redRemainingWalls);
-    }
-    if (gameState.activePlayer === Player.BLU) {
-        gameState.bluRemainingWalls--;
-        drawBluRemainingWalls(gameState.bluRemainingWalls);
-    }
+    if (gameState.activePlayer === Player.RED) gameState.redRemainingWalls--;
+    else if (gameState.activePlayer === Player.BLU) gameState.bluRemainingWalls--;
     return true;
 }
+
+function removeWall (inCol, inRow, inDirection) {
+    if (inDirection === Direction.HORIZONTAL)
+    {
+        var colorId = gameState.horizontalWalls[inCol][inRow];
+        if (colorId === Player.RED)
+        {
+            gameState.horizontalWalls[inCol][inRow] = Player.EMPTY;
+            gameState.redRemainingWalls++;
+        } else if (colorId === Player.BLU)
+        {
+            gameState.horizontalWalls[inCol][inRow] = Player.EMPTY;
+            gameState.bluRemainingWalls++;
+        }
+        else return false; // There was no wall there. Removal failed
+    }
+    else // inDirection == Direction.VERTICAL
+    {
+        var colorId = gameState.verticalWalls[inCol][inRow];
+        if (colorId === Player.RED)
+        {
+            gameState.verticalWalls[inCol][inRow] = Player.EMPTY;
+            gameState.redRemainingWalls++;
+        } else if (colorId === Player.BLU)
+        {
+            gameState.verticalWalls[inCol][inRow] = Player.EMPTY;
+            gameState.bluRemainingWalls++;
+        }
+        else return false; // There was no wall there. Removal failed
+    }
+    return true;
+};
 
 function isNextToWallOrBorder (inCol, inRow, inUDLR) {
     if (gameState.activePlayer == Player.EMPTY) throw Error("Player cannot be EMPTY");

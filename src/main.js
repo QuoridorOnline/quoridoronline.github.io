@@ -125,7 +125,8 @@ function initGameState() {
         validMovementsRed : validMovementsRed,
         validMovementsBlu : validMovementsBlu,
         currentStatus : currentStatus,
-        activePlayer : activePlayer
+        activePlayer : activePlayer,
+        lastMove : null
     };
     changeGameText(gameState.activePlayer + "'S TURN (" + gameState.redRemainingWalls + " WALLS REMAINING)");
     redrawAll();
@@ -267,11 +268,10 @@ function redrawAll () {
         context.fillStyle = "#8080ff";
         context.fillRect(0, CANVAS_HEIGHT - CELL_SIZE, CANVAS_WIDTH, CELL_SIZE);
     }
-    
-    
+
     // Then we redraw all the grid lines
     drawGridLines();
-    
+
     // Draw all the players
     drawO(gameState.redX, gameState.redY, Player.RED);
     drawO(gameState.bluX, gameState.bluY, Player.BLU);
@@ -280,9 +280,12 @@ function redrawAll () {
     for (var col=0; col<COLS-1; col++) {
         for (var row=0; row<ROWS-1; row++) {
             drawWall(col, row, gameState.horizontalWalls[col][row], Direction.HORIZONTAL);
-            drawWall(col, row, gameState.verticalWalls[col][row], Direction.VERTICAL);  
+            drawWall(col, row, gameState.verticalWalls[col][row], Direction.VERTICAL);
         }
     }
+
+    drawBluRemainingWalls(gameState.bluRemainingWalls);
+    drawRedRemainingWalls(gameState.redRemainingWalls);
 }
 function changeGameText(inString) {
     gameTextContext.clearRect(0, 0, NOTATION_PADDING + CANVAS_WIDTH, NOTATION_PADDING + 10);
@@ -424,9 +427,7 @@ function hoverAt (inMousePosition) {
     if (move.type === "wall") {
         if (validateWall(move.col, move.row, move.dir)) {
             drawWall(move.col, move.row, gameState.activePlayer, move.dir, true)
-        } else {
-            // changeGameText("No walls left or wall clash!");
-        }
+        } // No else statement because it won't even create a hover predictor wall
         return;
     }
     
@@ -443,8 +444,6 @@ function clickAt (inMousePosition) {
         //socket.emit("game:restartGame", "");
 		return;
     }
-
-    redrawAll();
     
     var move = selectMove(inMousePosition);
     
@@ -454,9 +453,7 @@ function clickAt (inMousePosition) {
             if (success) {
                 updateGame();
             }
-        } else {
-            // changeGameText("No walls left or wall clash!");
-        }
+        } // No else statement because it won't even create a hover predictor wall
         return;
     }
     
@@ -473,7 +470,6 @@ function clickAt (inMousePosition) {
         }
         return;
     }
-    
 };
 
 function getCanvasMousePosition (event) {
@@ -498,5 +494,6 @@ canvas.addEventListener('click', function (event) {
 });
 
 btn_undo.addEventListener('click', function() {
-    alert('Hello world');
+    removeWall(0,0,Direction.HORIZONTAL);
+    redrawAll();
 });

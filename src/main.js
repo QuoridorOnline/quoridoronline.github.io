@@ -30,7 +30,7 @@ var Player = { RED: 'RED', BLU: 'BLUE', EMPTY: 'EMPTY'};
 var GameStatus = { PLAYING: 'PLAYING', RED_WON: 'RED_WON', BLU_WON: 'BLU_WON'};
 
 var NOTATION_PADDING = 30;
-var TEXT_OFFSET_X = 55, TEXT_OFFSET_Y = 25;
+var TEXT_OFFSET_X = 30, TEXT_OFFSET_Y = 25;
 
 var titleText = document.getElementById('title-text');
 titleText.width = NOTATION_PADDING + CANVAS_WIDTH;
@@ -65,7 +65,7 @@ var gameText = document.getElementById('game-text');
 gameText.width = NOTATION_PADDING + CANVAS_WIDTH;
 gameText.height = NOTATION_PADDING;
 var gameTextContext = gameText.getContext('2d');
-gameTextContext.font = "26px Helvetica";
+gameTextContext.font = "24px Helvetica";
 
 var canvas = document.getElementById('quoridor-board');
 canvas.width = CANVAS_WIDTH;
@@ -189,11 +189,11 @@ function drawGridLines () {
 
     context.stroke();
 }
-function clearAll (inX, inY) {context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);}
+function clearAll () {context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);}
 function drawO (inX, inY, inPlayerColor, inIsHover) {
     // If we are hovering, draw a faded player token instead
     // default inIsHover = false
-    var inIsHover = typeof inIsHover !== 'undefined' ? inIsHover : false;
+    inIsHover = typeof inIsHover !== 'undefined' ? inIsHover : false;
 
     // Draws player circles
     var halfSectionSize = CELL_SIZE / 2;
@@ -221,7 +221,7 @@ function drawO (inX, inY, inPlayerColor, inIsHover) {
 function drawWall (inX, inY, inPlayerColor, inDirection, inIsHover) {
     // If we are hovering, draw a faded player token instead
     // default inIsHover = false
-    var inIsHover = typeof inIsHover !== 'undefined' ? inIsHover : false;
+    inIsHover = typeof inIsHover !== 'undefined' ? inIsHover : false;
 
     context.lineWidth = WALL_STROKE_WIDTH;
     if (!inIsHover) {
@@ -321,8 +321,8 @@ function drawRedRemainingWalls(inWallsLeft) {
     botContext.lineCap = "round";
 
     botContext.beginPath();
-    for(var i=0; i < inWallsLeft; i++) {
-        var x = NOTATION_PADDING + 4 + i * CELL_SIZE;
+    for(var j=0; j < inWallsLeft; j++) {
+        var x = NOTATION_PADDING + 4 + j * CELL_SIZE;
         var y1 = WALL_PADDING / 2;
         var y2 = 2 * CELL_SIZE - 6.5 * WALL_PADDING;
         botContext.moveTo(x, y1);
@@ -378,7 +378,7 @@ function selectMove (inMousePosition) {
     }
     
     return payload;
-};
+}
 function validateWall (inCol, inRow, inDirection) {
     // Wrapper around canAddWall to validate that player has enough walls
     var hasEnoughWalls;
@@ -392,7 +392,7 @@ function validateWall (inCol, inRow, inDirection) {
     if (!hasEnoughWalls) return false;
     
     return canAddWall(inCol, inRow, inDirection);
-};
+}
 function validateMove (inCol, inRow) {
     
     var validMovements;
@@ -411,7 +411,7 @@ function validateMove (inCol, inRow) {
     }
     
     return false; // no valid move found
-};
+}
 
 
 // ------ MOUSE FUNCTIONS ------ //
@@ -436,11 +436,10 @@ function hoverAt (inMousePosition) {
             drawO(move.col, move.row, gameState.activePlayer, true)
         }
     }
-};
+}
 
 function clickAt (inMousePosition) {
     if (gameState.currentStatus !== GameStatus.PLAYING) {
-        // TODO: RESTART GAME
         //socket.emit("game:restartGame", "");
 		return;
     }
@@ -468,9 +467,8 @@ function clickAt (inMousePosition) {
             }
             updateGame();
         }
-        return;
     }
-};
+}
 
 function getCanvasMousePosition (event) {
     var rect = canvas.getBoundingClientRect();

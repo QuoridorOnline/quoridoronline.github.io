@@ -8,7 +8,7 @@ var COLS = 9; // ROWS by COLS cells
 var ROWS = 9;
 
 // Named-varants of the various dimensions used for graphics drawing
-var CELL_SIZE = 60; // cell width and height (square)
+var CELL_SIZE = 50; // cell width and height (square)
 var CANVAS_WIDTH = CELL_SIZE * COLS;  // the drawing canvas
 var CANVAS_HEIGHT = CELL_SIZE * ROWS;
 
@@ -42,7 +42,7 @@ titleTextContext.fillText("QUORIDOR", NOTATION_PADDING + CANVAS_WIDTH/2 - 80, TE
 // TOP SPACE FOR BLUE WALLS
 var topNotation = document.getElementById('top-notation');
 topNotation.width = 2 * NOTATION_PADDING + CANVAS_WIDTH;
-topNotation.height = 2 * CELL_SIZE - 6 * WALL_PADDING;
+topNotation.height = 2 * CELL_SIZE - 6.5 * WALL_PADDING;
 var topContext = topNotation.getContext('2d');
 drawBluRemainingWalls(10);
 
@@ -57,7 +57,7 @@ for (var i=0; i < ROWS; i++) leftContext.fillText(9-i, 10, (i + 0.5) * CELL_SIZE
 // BOT SPACE FOR TEXT AND RED WALLS
 var botNotation = document.getElementById('bot-notation');
 botNotation.width = 2 * NOTATION_PADDING + CANVAS_WIDTH;
-botNotation.height = 2 * CELL_SIZE - 6 * WALL_PADDING;
+botNotation.height = 2 * CELL_SIZE - 6.5 * WALL_PADDING;
 var botContext = botNotation.getContext('2d');
 drawRedRemainingWalls(10);
 
@@ -314,7 +314,7 @@ function drawRedRemainingWalls(inWallsLeft) {
     // Creating the bot latter notation
     botContext.font = "32px Arial";
     for (var i=0; i < ROWS; i++) 
-        botContext.fillText(String.fromCharCode(65+i), NOTATION_PADDING + (i + 0.5) * CELL_SIZE - 10, 25);
+        botContext.fillText(String.fromCharCode(65+i), NOTATION_PADDING + (i + 0.5) * CELL_SIZE - 10, 30);
     
     botContext.lineWidth = WALL_STROKE_WIDTH * .75;
     botContext.strokeStyle = "red";

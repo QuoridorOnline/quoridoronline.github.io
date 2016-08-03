@@ -1,9 +1,23 @@
-fieldset.btn_holder {
-    position: absolute;
-    bottom: 0px;
-    left: 630px;
-    border:1px solid;
-    padding: 6px 15px;
+.selector {
+    position: relative;
+    bottom: 20px;
+    border: 2px;
+    width: 200px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.red-border {
+    border-color: red;
+    background: #ff9999;
+}
+
+.blue-border {
+    border-color: dodgerblue;
+    background: #9999ff;
 }
 
 input#btn_undo {

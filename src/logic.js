@@ -266,7 +266,7 @@ function isSolvable() {
 function recursiveSolve (inX, inY, inPlayer) {
     if (inPlayer == Player.EMPTY) throw Error("Player cannot be EMPTY");
 
-    // Teriminating Conditions
+    // Terminating Conditions
     if (inPlayer == Player.RED && inY == 0) return true;
     else if (inPlayer == Player.BLU && inY == ROWS-1) return true;
     wasHere[inX][inY] = true;

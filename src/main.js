@@ -32,12 +32,14 @@ var GameStatus = { PLAYING: 'PLAYING', RED_WON: 'RED_WON', BLU_WON: 'BLU_WON'};
 var NOTATION_PADDING = 30;
 var TEXT_OFFSET_X = 30, TEXT_OFFSET_Y = 25;
 
+/*
 var titleText = document.getElementById('title-text');
 titleText.width = NOTATION_PADDING + CANVAS_WIDTH;
 titleText.height = NOTATION_PADDING;
 var titleTextContext = titleText.getContext('2d');
 titleTextContext.font = "32px Futura";
 titleTextContext.fillText("QUORIDOR", NOTATION_PADDING + CANVAS_WIDTH/2 - 80, TEXT_OFFSET_Y);
+*/
 
 // TOP SPACE FOR BLUE WALLS
 var topNotation = document.getElementById('top-notation');

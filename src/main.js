@@ -493,7 +493,9 @@ canvas.addEventListener('click', function (event) {
     clickAt(mousePosition);
 });
 
+/*
 btn_undo.addEventListener('click', function() {
     removeWall(0,0,Direction.HORIZONTAL);
     redrawAll();
 });
+*/

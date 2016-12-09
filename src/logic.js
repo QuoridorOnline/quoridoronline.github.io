@@ -1,4 +1,6 @@
-// Written by Dylan Ho 23/06/2016
+// File: logic.js Written by Dylan Ho 22/06/2016
+// Game logic verification for quoridoronline, an implementation of the 2 player game Quoridor
+// Live application can be played at https://quoridoronline.github.io/
 
 'use strict';
 

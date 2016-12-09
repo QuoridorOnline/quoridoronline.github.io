@@ -1,5 +1,5 @@
 // File: main.js Written by Dylan Ho 22/06/2016
-// Main game logic for quoridoronline, an implementation of the 2 player game Quoridor
+// Main game control for quoridoronline, an implementation of the 2 player game Quoridor
 // Code adapted from Tic-Tac-Toe game at: http://codepen.io/solartic/pen/qEGqNL
 // Live application can be played at https://quoridoronline.github.io/
 

@@ -66,3 +66,9 @@ input#btn_undo:active {
     bottom: 26px;
     left: 9px;
 }
+
+.quick-rules {
+    position: relative;
+    bottom: 350px;
+    left: 495px;
+}

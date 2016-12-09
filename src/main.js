@@ -1,5 +1,7 @@
-// Written by Dylan Ho 22/06/2016
-// Code adapted from: http://codepen.io/solartic/pen/qEGqNL
+// File: main.js Written by Dylan Ho 22/06/2016
+// Main game logic for quoridoronline, an implementation of the 2 player game Quoridor
+// Code adapted from Tic-Tac-Toe game at: http://codepen.io/solartic/pen/qEGqNL
+// Live application can be played at https://quoridoronline.github.io/
 
 'use strict';
 
@@ -7,39 +9,16 @@
 var COLS = 9; // ROWS by COLS cells
 var ROWS = 9;
 
-// Named-varants of the various dimensions used for graphics drawing
+// Dimensions & other constants used for graphics drawing on html canvas
 var CELL_SIZE = 50; // cell width and height (square)
 var CANVAS_WIDTH = CELL_SIZE * COLS;  // the drawing canvas
 var CANVAS_HEIGHT = CELL_SIZE * ROWS;
-
-// Players (circles) are displayed inside a cell, with padding from border
-var CIRCLE_RADIUS = CELL_SIZE * 0.3; // width/height
-var CIRCLE_LINEWIDTH = 2; // pen stroke width
-
-// Grid varants
 var GRIDLINE_WIDTH = 3;
 var GRIDLINE_COLOR = "#ddd";
-
 var WALL_STROKE_WIDTH = 4; // wall stroke width
 var WALL_PADDING = CELL_SIZE / 10; // wall padding
-
-// Javascript implementation of Enums. Could possibly use http://www.2ality.com/2016/01/enumify.html
-var UDLR = { UP: 'UP', DOWN: 'DOWN', LEFT: 'LEFT', RIGHT: 'RIGHT' };
-var Direction = { VERTICAL: 'VERTICAL', HORIZONTAL: 'HORIZONTAL'};
-var Player = { RED: 'RED', BLU: 'BLUE', EMPTY: 'EMPTY'};
-var GameStatus = { PLAYING: 'PLAYING', RED_WON: 'RED_WON', BLU_WON: 'BLU_WON'};
-
 var NOTATION_PADDING = 30;
 var TEXT_OFFSET_X = 30, TEXT_OFFSET_Y = 25;
-
-/*
-var titleText = document.getElementById('title-text');
-titleText.width = NOTATION_PADDING + CANVAS_WIDTH;
-titleText.height = NOTATION_PADDING;
-var titleTextContext = titleText.getContext('2d');
-titleTextContext.font = "32px Futura";
-titleTextContext.fillText("QUORIDOR", NOTATION_PADDING + CANVAS_WIDTH/2 - 80, TEXT_OFFSET_Y);
-*/
 
 // TOP SPACE FOR BLUE WALLS
 var topNotation = document.getElementById('top-notation');
@@ -69,24 +48,38 @@ gameText.height = NOTATION_PADDING;
 var gameTextContext = gameText.getContext('2d');
 gameTextContext.font = "24px Helvetica";
 
+// Players tokens displayed inside a cell, with padding from border
+var CIRCLE_RADIUS = CELL_SIZE * 0.3; // width/height
+var CIRCLE_LINEWIDTH = 2; // pen stroke width
+
+// Javascript implementation of Enums. Could possibly use http://www.2ality.com/2016/01/enumify.html
+var UDLR = { UP: 'UP', DOWN: 'DOWN', LEFT: 'LEFT', RIGHT: 'RIGHT' };
+var Direction = { VERTICAL: 'VERTICAL', HORIZONTAL: 'HORIZONTAL'};
+var Player = { RED: 'RED', BLU: 'BLUE', EMPTY: 'EMPTY'};
+var GameStatus = { PLAYING: 'PLAYING', RED_WON: 'RED_WON', BLU_WON: 'BLU_WON'};
+
 var canvas = document.getElementById('quoridor-board');
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 var context = canvas.getContext('2d');
 
-var btn_undo = document.getElementById('btn_undo');
-
-// These 2 lines start the game.
-var gameState = [];
-initGameState();
+// Unimplemented undo button
+//var btn_undo = document.getElementById('btn_undo');
 
 // ------ GAMESTATE FUNCTIONS ------ //
+
+// initGameState
+// Called when app is initialized OR when game is restarted
+// Resets players to initial positions
+// Resets each player to 10 walls
+// Rerenders each players walls to 10 walls
+// Sets current player to RED
 function initGameState() {
-    // Player positions
+    // Initial player positions
     var redX = 4, redY = ROWS-1;
     var bluX = 4, bluY = 0;
 
-    // Initializing wall positions
+    // Rendering initial player walls
     var horizontalWalls = [];
     var verticalWalls = [];
     horizontalWalls.length = COLS-1;
@@ -106,7 +99,6 @@ function initGameState() {
         verticalWalls[col] = temporaryWallArrayForVertical;
     }
 
-    // Initializing valid movement coords
     var validMovementsRed = [[3,8],[4,7],[5,8]];
     var validMovementsBlu = [[3,0],[4,1],[5,0]];
 
@@ -133,6 +125,12 @@ function initGameState() {
     changeGameText(gameState.activePlayer + "'S TURN (" + gameState.redRemainingWalls + " WALLS REMAINING)");
     redrawAll();
 }
+
+// updateGame
+// Called after each move is made
+// Swaps active player
+// Check for win conditions
+// Redraws the board with new positions and updates walls
 function updateGame() {
     // Swap active player
     if (gameState.activePlayer === Player.RED) {
@@ -144,7 +142,6 @@ function updateGame() {
         changeGameText(gameState.activePlayer + "'S TURN (" + gameState.redRemainingWalls + " WALLS REMAINING)");
     }
 
-
     // Check if red or blu wins
     if (gameState.redY === 0) {changeGameText("RED WON! CLICK ANYWHERE TO RESTART."); gameState.currentStatus = GameStatus.RED_WON;}
     else if (gameState.bluY === ROWS-1) {changeGameText("BLUE WON! CLICK ANYWHERE TO RESTART."); gameState.currentStatus = GameStatus.BLU_WON;}
@@ -155,6 +152,9 @@ function updateGame() {
 }
 
 // ------ DRAWING FUNCTIONS ------ //
+// drawGridLines
+// Draws the board onto the app
+// Does not include player tokens or walls
 function drawGridLines () {
     var lineStart = 0;
     var lineLength = CANVAS_WIDTH;
@@ -191,7 +191,14 @@ function drawGridLines () {
 
     context.stroke();
 }
+
+// clearAll
+// Resets the canvas to blank slate
 function clearAll () {context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);}
+
+// drawO
+// Draws player tokens
+// Used to draw actual player token OR possible movements for player tokens
 function drawO (inX, inY, inPlayerColor, inIsHover) {
     // If we are hovering, draw a faded player token instead
     // default inIsHover = false
@@ -220,6 +227,10 @@ function drawO (inX, inY, inPlayerColor, inIsHover) {
     context.lineWidth = CIRCLE_LINEWIDTH;
     context.stroke();
 }
+
+// drawWall
+// Draws walls
+// Used to draw actual player walls OR possible wall placements
 function drawWall (inX, inY, inPlayerColor, inDirection, inIsHover) {
     // If we are hovering, draw a faded player token instead
     // default inIsHover = false
@@ -335,7 +346,10 @@ function drawRedRemainingWalls(inWallsLeft) {
 
 // ------ CONTROL FUNCTIONS ------ //
 
-// Returns a object with the currently selected move based on mouse pos (does not do validation)
+// selectMove called when mouse hovers over the board
+// Returns an object with the currently selected move based on mouse pos (does not do validation)
+// Could return possible player movement
+// Could return possible wall placement
 function selectMove (inMousePosition) {
     // Ascertain if user wants to place a wall or move the piece
     
@@ -381,6 +395,12 @@ function selectMove (inMousePosition) {
     
     return payload;
 }
+
+// validateWall
+// Called when mouse is clicked
+// Checks that player has enough walls left
+// Checks that adding that wall does not clash with another wall
+// Checks that wall does not trap a player in
 function validateWall (inCol, inRow, inDirection) {
     // Wrapper around canAddWall to validate that player has enough walls
     var hasEnoughWalls;
@@ -395,6 +415,8 @@ function validateWall (inCol, inRow, inDirection) {
     
     return canAddWall(inCol, inRow, inDirection);
 }
+
+// validateMove
 function validateMove (inCol, inRow) {
     
     var validMovements;
@@ -492,6 +514,9 @@ canvas.addEventListener('click', function (event) {
     var mousePosition = getCanvasMousePosition(event);
     clickAt(mousePosition);
 });
+
+var gameState = [];
+initGameState();
 
 /*
 btn_undo.addEventListener('click', function() {
